@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Course</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Edit Course</h1>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Course ID:</label>
+        <input type="text" name="course_id"
+               value="{{ course.course_id }}" required>
+        <br><br>
+
+        <label>Course Name:</label>
+        <input type="text" name="course_name"
+               value="{{ course.course_name }}" required>
+        <br><br>
+
+        <label>Duration:</label>
+        <input type="text" name="duration"
+               value="{{ course.duration }}" required>
+        <br><br>
+
+        <label>Description:</label>
+        <textarea name="description">{{ course.description }}</textarea>
+        <br><br>
+
+        <button type="submit">Update Course</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enroll Student</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Enroll Student in a Course</h1>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Student:</label>
+        <select name="student" required>
+            <option value="">Select Student</option>
+            {% for student in students %}
+            <option value="{{ student.id }}">
+                {{ student.student_id }} - {{ student.name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Course:</label>
+        <select name="course" required>
+            <option value="">Select Course</option>
+            {% for course in courses %}
+            <option value="{{ course.id }}">
+                {{ course.course_name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Enroll Student</button>
+    </form>
+
+    <p><a href="{% url 'enrollment_list' %}">View Enrollments</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Attendance</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Add Attendance</h1>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Student and Course:</label>
+        <select name="enrollment" required>
+            <option value="">Select Enrollment</option>
+            {% for item in enrollments %}
+            <option value="{{ item.id }}">
+                {{ item.student.name }} - {{ item.course.course_name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Date:</label>
+        <input type="date" name="date" required>
+
+        <label>Status:</label>
+        <select name="status" required>
+            <option value="">Select Status</option>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+            <option value="Late">Late</option>
+        </select>
+
+        <button type="submit">Save Attendance</button>
+    </form>
+
+    <p><a href="{% url 'attendance_list' %}">View Attendance</a></p>
+</div>
+</body>
+</html>

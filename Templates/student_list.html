@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student List</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    a {
+        margin-right: 10px;
+        text-decoration: none;
+    }
+</style>
+<script src="{% static 'script.js' %}"></script>
+</head>
+<body>
+
+<h1>Student List</h1><a href="{% url 'dashboard' %}">Dashboard</a>
+
+<form method="GET">
+    <input
+    type="text"
+    id="studentSearch"
+    name="q"
+    placeholder="Search by name, ID, email or course"
+    value="{{ search_query }}"
+    > 
+    
+    <button type="submit">Search</button>
+    <a href="{% url 'student_list' %}">Clear</a>
+</form>
+
+<br>
+
+<table border="1">
+    <tr>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Course</th>
+        <th>Action</th>
+    </tr>
+
+    {% for student in students %}
+    <tr class="student-row">
+        <td>{{ student.student_id }}</td>
+        <td>{{ student.name }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.phone }}</td>
+        <td>{{ student.course }}</td>
+        <td>
+            <a href="{% url 'edit_student' student.id %}">Edit</a>
+            <form method="POST"
+                action="{% url 'delete_student' student.id %}"
+                style="display: inline;"
+                onsubmit="return confirmDelete();">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+<a href="{% url 'add_student' %}">Add Student</a>
+
+</body>
+</html>

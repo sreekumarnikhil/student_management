@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course List</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Course List</h1>
+
+    <a href="{% url 'add_course' %}">Add Course</a>
+
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Duration</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+
+        {% for course in courses %}
+        <tr>
+            <td>{{ course.course_id }}</td>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.duration }}</td>
+            <td>{{ course.description }}</td>
+            <td>
+                <a href="{% url 'edit_course' course.id %}">Edit</a>
+
+                <form method="POST"
+                    action="{% url 'delete_course' course.id %}"
+                    style="display: inline;"
+                    onsubmit="return confirm('Delete this course?');">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No courses available.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="{% url 'student_list' %}">Back to Students</a></p>
+</body>
+</html>

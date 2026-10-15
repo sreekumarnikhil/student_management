@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Marks</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="container">
+    <h1>Add Student Marks</h1>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Student and Course:</label>
+        <select name="enrollment" required>
+            <option value="">Select Enrollment</option>
+            {% for item in enrollments %}
+            <option value="{{ item.id }}">
+                {{ item.student.name }} - {{ item.course.course_name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Assessment Name:</label>
+        <input type="text" name="assessment_name" required>
+
+        <label>Marks Obtained:</label>
+        <input type="number" name="marks_obtained"
+               min="0" step="0.01" required>
+
+        <label>Total Marks:</label>
+        <input type="number" name="total_marks"
+               min="0.01" step="0.01" required>
+
+        <button type="submit">Save Marks</button>
+    </form>
+
+    <p><a href="{% url 'mark_list' %}">View Marks</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Academic Portal</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Student Management and Academic Portal</h1>
+        <p>Welcome to the Academic Portal</p>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Students</h3>
+                <p>{{ student_count }}</p>
+                <a href="{% url 'student_list' %}">View Students</a>
+            </div>
+
+            <div class="card">
+                <h3>Courses</h3>
+                <p>{{ course_count }}</p>
+                <a href="{% url 'course_list' %}">View Courses</a>
+            </div>
+
+            <div class="card">
+                <h3>Enrollments</h3>
+                <p>{{ enrollment_count }}</p>
+                <a href="{% url 'enrollment_list' %}">View Enrollments</a>
+            </div>
+
+            <div class="card">
+                <h3>Attendance Records</h3>
+                <p>{{ attendance_count }}</p>
+                <a href="{% url 'attendance_list' %}">View Attendance</a>
+            </div>
+
+            <div class="card">
+                <h3>Mark Records</h3>
+                <p>{{ mark_count }}</p>
+                <a href="{% url 'mark_list' %}">View Marks</a>
+            </div>
+        </div>
+
+        <p><a href="/admin/">Open Django Admin</a></p>
+    </div>
+</body>
+</html>
